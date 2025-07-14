@@ -1,0 +1,462 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5dc;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.4;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  color: #333;
+  margin: 0;
+  font-size: 24px;
+}
+
+.question-container {
+  background-color: #f5f5dc;
+  border: 3px solid #8B4CBB;
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 30px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.question-header {
+  background-color: #E8E8E8;
+  padding: 8px 15px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-weight: bold;
+  color: #333;
+  font-size: 16px;
+}
+
+.badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+}
+
+.badge-concurso {
+  background-color: #D4A574;
+}
+
+.badge-area {
+  background-color: #5CB85C;
+}
+
+.badge-cargo {
+  background-color: #D63384;
+}
+
+.topic-tag {
+  background-color: #5CB85C;
+  color: white;
+  padding: 6px 15px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.instruction {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.text-base {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+  font-style: italic;
+  line-height: 1.5;
+  color: #333;
+}
+
+.alternatives {
+  margin-top: 20px;
+}
+
+.alternative {
+  display: flex;
+  align-items: flex-start;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  gap: 12px;
+}
+
+.alternative:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.alternative-letter {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.alternative-a .alternative-letter {
+  background-color: #F39C12;
+}
+
+.alternative-b .alternative-letter {
+  background-color: #3498DB;
+}
+
+.alternative-c .alternative-letter {
+  background-color: #9B59B6;
+}
+
+.alternative-d .alternative-letter {
+  background-color: #E67E22;
+}
+
+.alternative-e .alternative-letter {
+  background-color: #27AE60;
+}
+
+.alternative-text {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.answer-section {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.answer-box {
+  flex: 1;
+  height: 50px;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s;
+  min-width: 100px;
+}
+
+.btn-answer {
+  background-color: #27AE60;
+  color: white;
+}
+
+.btn-answer:hover {
+  background-color: #229954;
+}
+
+.btn-comment {
+  background-color: #E74C3C;
+  color: white;
+}
+
+.btn-comment:hover {
+  background-color: #C0392B;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.nav-btn {
+  padding: 10px 20px;
+  border: 2px solid #8B4CBB;
+  background-color: white;
+  color: #8B4CBB;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.nav-btn:hover {
+  background-color: #8B4CBB;
+  color: white;
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.question-counter {
+  text-align: center;
+  margin: 20px 0;
+  font-weight: bold;
+  color: #8B4CBB;
+}
+
+.answer-result {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  display: none;
+}
+
+.answer-correct {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.answer-incorrect {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.answer-explanation {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.comment-section {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #e3f2fd;
+  border: 1px solid #bbdefb;
+  border-radius: 8px;
+  display: none;
+}
+
+.comment-title {
+  font-weight: bold;
+  color: #1976d2;
+  margin-bottom: 8px;
+}
+
+.comment-text {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .question-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .badges {
+    justify-content: center;
+  }
+
+  .alternative {
+    padding: 12px;
+  }
+
+  .alternative-text {
+    font-size: 13px;
+  }
+
+  .answer-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media print {
+  body {
+    background-color: #f5f5dc;
+    /* Mantém o fundo bege do site */
+    padding: 10mm;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    /* Força a impressão de cores de fundo */
+  }
+
+  .header {
+    margin-bottom: 10mm;
+    background-color: transparent;
+    /* Mantém o fundo transparente do cabeçalho */
+  }
+
+  .print-button,
+  .answer-section,
+  .answer-box,
+  .btn-answer,
+  .btn-comment {
+    display: none;
+    /* Oculta botões e elementos interativos */
+  }
+
+  .question-container {
+    border: 3px solid #8B4CBB;
+    /* Mantém a borda roxa do site */
+    margin-bottom: 10mm;
+    padding: 25px;
+    background-color: #f5f5dc;
+    /* Mantém o fundo bege */
+    page-break-inside: avoid;
+    /* Evita quebra de página dentro da questão */
+  }
+
+  .question-header {
+    background-color: #E8E8E8;
+    /* Mantém o fundo cinza claro do cabeçalho */
+    padding: 8px 15px;
+    border-radius: 15px;
+  }
+
+  .badge-concurso {
+    background-color: #D4A574;
+    /* Mantém a cor do badge Concurso */
+  }
+
+  .badge-area {
+    background-color: #5CB85C;
+    /* Mantém a cor do badge Área */
+  }
+
+  .badge-cargo {
+    background-color: #D63384;
+    /* Mantém a cor do badge Cargo */
+  }
+
+  .topic-tag {
+    background-color: #5CB85C;
+    /* Mantém a cor verde do tópico */
+    color: white;
+  }
+
+  .text-base {
+    background-color: white;
+    /* Mantém o fundo branco do texto base */
+    border: 1px solid #ddd;
+    /* Mantém a borda cinza */
+  }
+
+  .alternative {
+    background-color: transparent;
+    /* Mantém o fundo padrão das alternativas */
+  }
+
+  .alternative.correct {
+    background-color: #d4edda;
+    /* Mantém o fundo verde claro para a alternativa correta */
+    font-weight: bold;
+  }
+
+  .alternative-letter {
+    color: white;
+    /* Garante que as letras mantenham a cor branca */
+  }
+
+  .alternative-a .alternative-letter {
+    background-color: #F39C12;
+  }
+
+  /* Laranja */
+  .alternative-b .alternative-letter {
+    background-color: #3498DB;
+  }
+
+  /* Azul */
+  .alternative-c .alternative-letter {
+    background-color: #9B59B6;
+  }
+
+  /* Roxo */
+  .alternative-d .alternative-letter {
+    background-color: #E67E22;
+  }
+
+  /* Laranja escuro */
+  .alternative-e .alternative-letter {
+    background-color: #27AE60;
+  }
+
+  /* Verde */
+
+  .answer-result {
+    display: block;
+    /* Exibe a seção de resposta */
+    background-color: #d4edda;
+    /* Mantém o fundo verde claro */
+    border: 1px solid #c3e6cb;
+    /* Mantém a borda verde */
+    color: #155724;
+    /* Mantém a cor do texto */
+  }
+
+  .comment-section {
+    display: block;
+    /* Exibe a seção de comentários */
+    background-color: #e3f2fd;
+    /* Mantém o fundo azul claro */
+    border: 1px solid #bbdefb;
+    /* Mantém a borda azul */
+    color: #333;
+    /* Mantém a cor do texto */
+  }
+
+  .comment-title {
+    color: #1976d2;
+    /* Mantém a cor azul do título do comentário */
+  }
+
+  @page {
+    margin: 10mm;
+    /* Define margens para a página */
+  }
+}

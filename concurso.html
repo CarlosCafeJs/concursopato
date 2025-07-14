@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Banco do Brasil - Língua Portuguesa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5dc;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.4;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .question-container {
+            background-color: #f5f5dc;
+            border: 3px solid #8B4CBB;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .question-header {
+            background-color: #E8E8E8;
+            padding: 8px 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .question-number {
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .badge-concurso {
+            background-color: #D4A574;
+        }
+        
+        .badge-area {
+            background-color: #5CB85C;
+        }
+        
+        .badge-cargo {
+            background-color: #D63384;
+        }
+        
+        .topic-tag {
+            background-color: #5CB85C;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .instruction {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .text-base {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            line-height: 1.5;
+            color: #333;
+        }
+        
+        .alternatives {
+            margin-top: 20px;
+        }
+        
+        .alternative {
+            display: flex;
+            align-items: flex-start;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            gap: 12px;
+        }
+        
+        .alternative:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .alternative-letter {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .alternative-a .alternative-letter { background-color: #F39C12; }
+        .alternative-b .alternative-letter { background-color: #3498DB; }
+        .alternative-c .alternative-letter { background-color: #9B59B6; }
+        .alternative-d .alternative-letter { background-color: #E67E22; }
+        .alternative-e .alternative-letter { background-color: #27AE60; }
+        
+        .alternative-text {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .answer-section {
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .answer-box {
+            flex: 1;
+            height: 50px;
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+            min-width: 100px;
+        }
+        
+        .btn-answer {
+            background-color: #27AE60;
+            color: white;
+        }
+        
+        .btn-answer:hover {
+            background-color: #229954;
+        }
+        
+        .btn-comment {
+            background-color: #E74C3C;
+            color: white;
+        }
+        
+        .btn-comment:hover {
+            background-color: #C0392B;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            border: 2px solid #8B4CBB;
+            background-color: white;
+            color: #8B4CBB;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background-color: #8B4CBB;
+            color: white;
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .question-counter {
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #8B4CBB;
+        }
+        
+        .answer-result {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .answer-correct {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .answer-incorrect {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .answer-explanation {
+            margin-top: 10px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .comment-section {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .comment-title {
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 8px;
+        }
+        
+        .comment-text {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .question-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .badges {
+                justify-content: center;
+            }
+            
+            .alternative {
+                padding: 12px;
+            }
+            
+            .alternative-text {
+                font-size: 13px;
+            }
+            
+            .answer-section {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>LÍNGUA PORTUGUESA</h1>
+    </div>
+    
+    <div class="question-counter">
+        <span id="currentQuestion">1</span> de <span id="totalQuestions">1</span>
+    </div>
+    
+    <div id="questionContainer">
+        <div class="question-container">
+            <div class="question-header">
+                <div class="question-number">LP-000</div>
+                <div class="badges">
+                    <span class="badge badge-concurso">Concurso: Banco do Brasil</span>
+                    <span class="badge badge-area">Área: Conhecimentos Bancários</span>
+                    <span class="badge badge-cargo">Cargo: Escriturário</span>
+                </div>
+            </div>
+            
+            <div class="topic-tag">LP - Compreensão e Interpretação de Texto</div>
+            
+            <div class="instruction">Leia o trecho a seguir:</div>
+            
+            <div class="text-base">"A clareza na comunicação escrita é essencial para o bom atendimento ao cliente e para a imagem da instituição. Textos bem estruturados, objetivos e gramaticalmente corretos demonstram profissionalismo e respeito ao interlocutor."</div>
+            
+            <div class="instruction">Com base no texto acima, assinale a alternativa correta:</div>
+            
+            <div class="alternatives">
+                <div class="alternative alternative-a" onclick="selectAlternative('A')">
+                    <div class="alternative-letter">A</div>
+                    <div class="alternative-text">A clareza na comunicação escrita é desejável, mas não influencia a imagem da instituição perante o cliente.</div>
+                </div>
+                <div class="alternative alternative-b" onclick="selectAlternative('B')">
+                    <div class="alternative-letter">B</div>
+                    <div class="alternative-text">A correção gramatical, embora recomendável, não tem relação direta com o profissionalismo.</div>
+                </div>
+                <div class="alternative alternative-c" onclick="selectAlternative('C')">
+                    <div class="alternative-letter">C</div>
+                    <div class="alternative-text">A boa estruturação de textos pode contribuir para o fortalecimento da imagem institucional.</div>
+                </div>
+                <div class="alternative alternative-d" onclick="selectAlternative('D')">
+                    <div class="alternative-letter">D</div>
+                    <div class="alternative-text">O uso de linguagem rebuscada é o principal fator que garante a objetividade de um texto.</div>
+                </div>
+                <div class="alternative alternative-e" onclick="selectAlternative('E')">
+                    <div class="alternative-letter">E</div>
+                    <div class="alternative-text">A comunicação escrita deve priorizar o uso de termos técnicos, mesmo que isso comprometa a clareza.</div>
+                </div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-box" id="answerBox">
+                    <span id="answerText">Selecione uma alternativa</span>
+                </div>
+                <button class="btn btn-answer" onclick="showAnswer()">✓ Resposta</button>
+                <button class="btn btn-comment" onclick="showComment()">💬 Comentário</button>
+            </div>
+            
+            <div class="answer-result" id="answerResult">
+                <div class="answer-explanation"></div>
+            </div>
+            
+            <div class="comment-section" id="commentSection">
+                <div class="comment-title">Comentário do Professor</div>
+                <div class="comment-text">Esta questão avalia a capacidade de compreensão textual, focando na identificação da ideia central do texto sobre comunicação escrita no ambiente corporativo. É fundamental identificar que o texto estabelece uma relação direta entre a qualidade da comunicação escrita e a imagem profissional da instituição.</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>← Anterior</button>
+        <button class="nav-btn" id="nextBtn" onclick="nextQuestion()" disabled>Próxima →</button>
+    </div>
+
+    <script>
+        let selectedAnswer = null;
+        let answerShown = false;
+
+        function selectAlternative(letter) {
+            // Remover seleção anterior
+            document.querySelectorAll('.alternative').forEach(alt => {
+                alt.style.backgroundColor = '';
+                alt.style.border = '';
+            });
+            
+            // Destacar seleção atual
+            const selectedAlt = document.querySelector(`.alternative-${letter.toLowerCase()}`);
+            if (selectedAlt) {
+                selectedAlt.style.backgroundColor = 'rgba(139, 76, 187, 0.2)';
+                selectedAlt.style.border = '2px solid #8B4CBB';
+            }
+            
+            selectedAnswer = letter;
+            
+            // Atualizar caixa de resposta
+            const answerBox = document.getElementById('answerBox');
+            const answerText = document.getElementById('answerText');
+            
+            if (selectedAnswer) {
+                answerText.textContent = `Alternativa selecionada: ${letter}`;
+                answerBox.style.borderColor = '#8B4CBB';
+                answerBox.style.backgroundColor = 'rgba(139, 76, 187, 0.05)';
+            }
+        }
+
+        function showAnswer() {
+            const answerResult = document.getElementById('answerResult');
+            const explanation = answerResult.querySelector('.answer-explanation');
+            
+            if (selectedAnswer) {
+                answerResult.style.display = 'block';
+                
+                if (selectedAnswer === 'C') {
+                    answerResult.className = 'answer-result answer-correct';
+                    explanation.innerHTML = `
+                        <strong>✓ Resposta correta!</strong><br>
+                        A alternativa C está correta. O texto afirma claramente que "textos bem estruturados, objetivos e gramaticalmente corretos demonstram profissionalismo e respeito ao interlocutor" e são "essenciais para a imagem da instituição".
+                    `;
+                } else {
+                    answerResult.className = 'answer-result answer-incorrect';
+                    explanation.innerHTML = `
+                        <strong>✗ Resposta incorreta.</strong><br>
+                        A resposta correta é a alternativa <strong>C</strong>. O texto estabelece uma relação direta entre a boa estruturação de textos e a imagem institucional, afirmando que textos bem estruturados são "essenciais para a imagem da instituição".
+                    `;
+                }
+            } else {
+                alert('Por favor, selecione uma alternativa antes de ver a resposta.');
+            }
+            
+            answerShown = true;
+        }
+
+        function showComment() {
+            const commentSection = document.getElementById('commentSection');
+            
+            if (commentSection.style.display === 'none' || commentSection.style.display === '') {
+                commentSection.style.display = 'block';
+            } else {
+                commentSection.style.display = 'none';
+            }
+        }
+
+        function nextQuestion() {
+            // Desabilitado - apenas 1 questão
+        }
+
+        function previousQuestion() {
+            // Desabilitado - apenas 1 questão
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Banco do Brasil - Língua Portuguesa</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>LÍNGUA PORTUGUESA</h1>
+    </div>
+    
+    <div class="question-counter">
+        <span id="currentQuestion">1</span> de <span id="totalQuestions">1</span>
+    </div>
+    
+    <div id="questionContainer">
+        <div class="question-container">
+            <div class="question-header">
+                <div class="question-number">LP-000</div>
+                <div class="badges">
+                    <span class="badge badge-concurso">Concurso: Banco do Brasil</span>
+                    <span class="badge badge-area">Área: Conhecimentos Bancários</span>
+                    <span class="badge badge-cargo">Cargo: Escriturário</span>
+                </div>
+            </div>
+            
+            <div class="topic-tag">LP - Compreensão e Interpretação de Texto</div>
+            
+            <div class="instruction">Leia o trecho a seguir:</div>
+            
+            <div class="text-base">"A clareza na comunicação escrita é essencial para o bom atendimento ao cliente e para a imagem da instituição. Textos bem estruturados, objetivos e gramaticalmente corretos demonstram profissionalismo e respeito ao interlocutor."</div>
+            
+            <div class="instruction">Com base no texto acima, assinale a alternativa correta:</div>
+            
+            <div class="alternatives">
+                <div class="alternative alternative-a" onclick="selectAlternative('A')">
+                    <div class="alternative-letter">A</div>
+                    <div class="alternative-text">A clareza na comunicação escrita é desejável, mas não influencia a imagem da instituição perante o cliente.</div>
+                </div>
+                <div class="alternative alternative-b" onclick="selectAlternative('B')">
+                    <div class="alternative-letter">B</div>
+                    <div class="alternative-text">A correção gramatical, embora recomendável, não tem relação direta com o profissionalismo.</div>
+                </div>
+                <div class="alternative alternative-c" onclick="selectAlternative('C')">
+                    <div class="alternative-letter">C</div>
+                    <div class="alternative-text">A boa estruturação de textos pode contribuir para o fortalecimento da imagem institucional.</div>
+                </div>
+                <div class="alternative alternative-d" onclick="selectAlternative('D')">
+                    <div class="alternative-letter">D</div>
+                    <div class="alternative-text">O uso de linguagem rebuscada é o principal fator que garante a objetividade de um texto.</div>
+                </div>
+                <div class="alternative alternative-e" onclick="selectAlternative('E')">
+                    <div class="alternative-letter">E</div>
+                    <div class="alternative-text">A comunicação escrita deve priorizar o uso de termos técnicos, mesmo que isso comprometa a clareza.</div>
+                </div>
+            </div>
+            
+            <div class="answer-section">
+                <div class="answer-box" id="answerBox">
+                    <span id="answerText">Selecione uma alternativa</span>
+                </div>
+                <button class="btn btn-answer" onclick="showAnswer()">✓ Resposta</button>
+                <button class="btn btn-comment" onclick="showComment()">💬 Comentário</button>
+            </div>
+            
+            <div class="answer-result" id="answerResult">
+                <div class="answer-explanation"></div>
+            </div>
+            
+            <div class="comment-section" id="commentSection">
+                <div class="comment-title">Comentário do Professor</div>
+                <div class="comment-text">Esta questão avalia a capacidade de compreensão textual, focando na identificação da ideia central do texto sobre comunicação escrita no ambiente corporativo. É fundamental identificar que o texto estabelece uma relação direta entre a qualidade da comunicação escrita e a imagem profissional da instituição.</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>← Anterior</button>
+        <button class="nav-btn" id="nextBtn" onclick="nextQuestion()" disabled>Próxima →</button>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

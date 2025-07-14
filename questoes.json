@@ -1,0 +1,95 @@
+{
+  "questoes": [
+    {
+      "id": "1",
+      "area": "Conhecimentos Gerais",
+      "cargo": "Escriturário",
+      "topicTag": "Geografia",
+      "instruction": "Responda à questão abaixo com base em seus conhecimentos de geografia.",
+      "question": "Qual é a capital do Brasil?",
+      "alternatives": [
+        "São Paulo",
+        "Rio de Janeiro",
+        "Brasília",
+        "Belo Horizonte",
+        "Salvador"
+      ],
+      "correctAnswer": "C",
+      "explanation": "Brasília é a capital do Brasil desde 21 de abril de 1960, quando foi inaugurada, substituindo o Rio de Janeiro.",
+      "comment": "Questão clássica de conhecimentos gerais, frequentemente cobrada em concursos públicos."
+    },
+    {
+      "id": "2",
+      "area": "Matemática",
+      "cargo": "Escriturário",
+      "topicTag": "Aritmética",
+      "instruction": "Resolva a questão de matemática abaixo.",
+      "question": "Se um produto custa R$ 120,00 e recebe um desconto de 15%, qual será o preço final?",
+      "alternatives": [
+        "R$ 90,00",
+        "R$ 100,00",
+        "R$ 102,00",
+        "R$ 108,00",
+        "R$ 110,00"
+      ],
+      "correctAnswer": "C",
+      "explanation": "O desconto de 15% sobre R$ 120,00 é calculado como: 120 × 0,15 = 18. Assim, o preço final é 120 - 18 = R$ 102,00.",
+      "comment": "Questões de desconto percentual são comuns em concursos bancários, testando raciocínio lógico e cálculos rápidos."
+    },
+    {
+      "id": "3",
+      "area": "Língua Portuguesa",
+      "cargo": "Escriturário",
+      "topicTag": "Interpretação de Texto",
+      "instruction": "Leia o trecho abaixo e responda à questão.",
+      "textBase": "O Brasil é um país de dimensões continentais, com uma rica diversidade cultural e natural. Sua economia é uma das maiores da América Latina, mas enfrenta desafios como desigualdade social e dependência de commodities.",
+      "question": "Qual é o principal desafio mencionado no trecho?",
+      "alternatives": [
+        "Falta de diversidade cultural",
+        "Redução da economia",
+        "Desigualdade social",
+        "Falta de recursos naturais",
+        "Ausência de commodities"
+      ],
+      "correctAnswer": "C",
+      "explanation": "O trecho destaca a desigualdade social como um dos desafios enfrentados pela economia brasileira.",
+      "comment": "Interpretação de texto é essencial em concursos, exigindo atenção aos detalhes do enunciado."
+    },
+    {
+      "id": "4",
+      "area": "Informática",
+      "cargo": "Escriturário",
+      "topicTag": "Sistemas Operacionais",
+      "instruction": "Responda à questão com base em seus conhecimentos de informática.",
+      "question": "Qual dos seguintes é um sistema operacional de código aberto?",
+      "alternatives": [
+        "Windows 10",
+        "macOS",
+        "Linux",
+        "iOS",
+        "Android"
+      ],
+      "correctAnswer": "C",
+      "explanation": "Linux é um sistema operacional de código aberto, amplamente utilizado e modificável por desenvolvedores. Windows, macOS e iOS são sistemas proprietários, enquanto o Android, embora baseado em Linux, não é totalmente de código aberto.",
+      "comment": "Questões sobre sistemas operacionais são frequentes em concursos bancários, especialmente para cargos que envolvem uso de tecnologia."
+    },
+    {
+      "id": "5",
+      "area": "Conhecimentos Bancários",
+      "cargo": "Escriturário",
+      "topicTag": "Produtos Bancários",
+      "instruction": "Responda à questão com base em seus conhecimentos sobre produtos bancários.",
+      "question": "O que caracteriza uma conta-corrente em um banco comercial?",
+      "alternatives": [
+        "É usada exclusivamente para investimentos a longo prazo",
+        "Não permite movimentações frequentes",
+        "Permite depósitos, saques e transferências com movimentação frequente",
+        "É restrita a pessoas jurídicas",
+        "Oferece rendimentos fixos mensais"
+      ],
+      "correctAnswer": "C",
+      "explanation": "A conta-corrente é um produto bancário que permite movimentações frequentes, como depósitos, saques e transferências, sendo ideal para o dia a dia de pessoas físicas e jurídicas.",
+      "comment": "Conhecimentos bancários são fundamentais para o cargo de escriturário, com foco em produtos e serviços oferecidos por bancos."
+    }
+  ]
+}
