@@ -4,13 +4,15 @@
   --background-white: white;
   --text-primary: #333;
   --text-secondary: #666;
-  --border-primary: #8B4CBB;
+  --border-primary: black;
+  /* Changed to black for black borders */
   --border-light: #ddd;
   --question-header-bg: #E8E8E8;
   --badge-concurso: #D4A574;
   --badge-area: #5CB85C;
   --badge-cargo: #D63384;
-  --topic-tag-bg: #5CB85C;
+  --topic-tag-bg: #FFC107;
+  /* Yellow for "Texto" badge as per image */
   --alternative-a: #F39C12;
   --alternative-b: #3498DB;
   --alternative-c: #9B59B6;
@@ -51,7 +53,8 @@
   --border-radius-circle: 25px;
   --margin-base: 20px;
   --margin-large: 30px;
-  --border-width-base: 1px;
+  --border-width-base: 2px;
+  /* Increased for thicker black borders */
   --border-width-question: 3px;
   --border-width-answer: 2px;
   --line-height-base: 1.4;
@@ -87,11 +90,14 @@ body {
   margin-left: auto;
   margin-right: auto;
   page-break-inside: avoid;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  /* Added shadow for depth */
 }
 
 .question-header {
   background-color: var(--question-header-bg);
   padding: var(--padding-header);
+  border: var(--border-width-base) solid var(--border-primary);
   border-radius: var(--border-radius-large);
   margin-bottom: var(--margin-base);
   display: flex;
@@ -105,6 +111,10 @@ body {
   font-weight: bold;
   color: var(--text-primary);
   font-size: var(--font-size-question-number);
+  border: var(--border-width-base) solid var(--border-primary);
+  /* Black border around question number */
+  padding: 2px 8px;
+  border-radius: var(--border-radius-base);
 }
 
 .badges {
@@ -115,10 +125,14 @@ body {
 
 .badge {
   padding: 4px 12px;
+  border: var(--border-width-base) solid var(--border-primary);
+  /* Black border around badges */
   border-radius: var(--border-radius-large);
   font-size: var(--font-size-badge);
   font-weight: bold;
   color: var(--background-white);
+  text-transform: uppercase;
+  /* Match the image's uppercase text */
 }
 
 .badge-concurso {
@@ -137,11 +151,15 @@ body {
   background-color: var(--topic-tag-bg);
   color: var(--background-white);
   padding: 6px 15px;
+  border: var(--border-width-base) solid var(--border-primary);
+  /* Black border around topic tag */
   border-radius: var(--border-radius-large);
   font-size: var(--font-size-badge);
   font-weight: bold;
   display: inline-block;
   margin-bottom: var(--margin-base);
+  text-transform: uppercase;
+  /* Match the image's uppercase text */
 }
 
 .instruction {
@@ -149,11 +167,14 @@ body {
   color: var(--text-primary);
   margin-bottom: 15px;
   font-size: var(--font-size-base);
+  border-bottom: var(--border-width-base) dashed var(--border-primary);
+  /* Dashed line as in image */
 }
 
 .text-base {
   background-color: var(--background-white);
-  border: var(--border-width-base) solid var(--border-light);
+  border: var(--border-width-base) solid var(--border-primary);
+  /* Black border instead of light */
   border-radius: var(--border-radius-base);
   padding: 15px;
   margin: 15px 0;
@@ -171,6 +192,8 @@ body {
   align-items: flex-start;
   margin: 10px 0;
   padding: var(--padding-alternative);
+  border: var(--border-width-base) solid var(--border-primary);
+  /* Black border around alternatives */
   border-radius: var(--border-radius-base);
   cursor: pointer;
   transition: background-color 0.3s;
@@ -184,6 +207,8 @@ body {
 .alternative-letter {
   width: 22px;
   height: 22px;
+  border: var(--border-width-base) solid var(--border-primary);
+  /* Black border around letter circles */
   border-radius: 50%;
   color: var(--background-white);
   font-weight: bold;
@@ -244,13 +269,17 @@ body {
 
 .btn {
   padding: var(--padding-btn);
-  border: none;
+  border: var(--border-width-base) solid var(--border-primary);
+  /* Black border around buttons */
   border-radius: var(--border-radius-circle);
   font-weight: bold;
   cursor: pointer;
   font-size: var(--font-size-badge);
   transition: all 0.3s;
   min-width: 100px;
+  background-color: var(--background-white);
+  /* Match image button style */
+  color: var(--text-primary);
 }
 
 .btn-print {
@@ -331,11 +360,11 @@ body {
 @media print {
   body {
     background-color: var(--background-white);
-    padding: 10mm;
+    padding: 0;
   }
 
   .header {
-    margin-bottom: 10mm;
+    margin-bottom: 5mm;
   }
 
   .print-button,
@@ -347,32 +376,53 @@ body {
   }
 
   .question-container {
-    border: var(--border-width-answer) solid var(--border-primary);
-    margin-bottom: 10mm;
-    padding: 15px;
+    border: var(--border-width-question) solid var(--border-primary);
+    margin: 0;
+    padding: 5mm;
+    width: 100%;
+    /* Full width only for print */
+    box-sizing: border-box;
+    /* Ensure padding doesn't exceed width */
+    page-break-inside: avoid;
+  }
+
+  .question-header {
+    padding: 2mm 3mm;
+    margin-bottom: 2mm;
+  }
+
+  .instruction {
+    margin-bottom: 2mm;
+  }
+
+  .text-base {
+    padding: 3mm;
+    margin: 2mm 0;
+  }
+
+  .alternative {
+    margin: 2mm 0;
+    padding: 2mm;
   }
 
   .answer-result {
-    display: block;
-    background-color: var(--answer-correct-bg);
-    border: var(--border-width-base) solid var(--answer-correct-border);
-    color: var(--answer-correct-text);
+    margin-top: 2mm;
+    padding: 2mm;
   }
 
   .comment-section {
-    display: block;
-    background-color: var(--comment-section-bg);
-    border: var(--border-width-base) solid var(--comment-section-border);
-    color: var(--text-primary);
+    margin-top: 2mm;
+    padding: 2mm;
   }
 
-  .alternative.correct {
-    background-color: var(--answer-correct-bg);
-    font-weight: bold;
+  .comment-title {
+    margin-bottom: 2mm;
   }
 
   @page {
-    margin: 10mm;
+    size: A4;
+    margin: 5mm;
+    padding: 0;
   }
 }
 
@@ -403,13 +453,13 @@ body {
 @media print {
   body {
     background-color: var(--background-body);
-    padding: 10mm;
+    padding: 0;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
   .header {
-    margin-bottom: 10mm;
+    margin-bottom: 5mm;
     background-color: transparent;
   }
 
@@ -423,15 +473,17 @@ body {
 
   .question-container {
     border: var(--border-width-question) solid var(--border-primary);
-    margin-bottom: 10mm;
-    padding: var(--padding-question);
+    margin: 0;
+    padding: 5mm;
     background-color: var(--background-body);
     page-break-inside: avoid;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .question-header {
     background-color: var(--question-header-bg);
-    padding: var(--padding-header);
+    padding: 2mm 3mm;
     border-radius: var(--border-radius-large);
   }
 
@@ -454,7 +506,7 @@ body {
 
   .text-base {
     background-color: var(--background-white);
-    border: var(--border-width-base) solid var(--border-light);
+    border: var(--border-width-base) solid var(--border-primary);
   }
 
   .alternative {
@@ -509,6 +561,8 @@ body {
   }
 
   @page {
-    margin: 10mm;
+    size: A4;
+    margin: 5mm;
+    padding: 0;
   }
 }

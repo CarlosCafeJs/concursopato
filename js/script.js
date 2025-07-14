@@ -505,6 +505,8 @@ const state = questions.map(() => ({
   selectedAnswer: null,
   answerShown: false
 }));
+
+
 function renderQuestions() {
   const container = document.getElementById('questionContainer');
   container.innerHTML = questions.map((question, index) => `
@@ -528,7 +530,7 @@ function renderQuestions() {
             
             <div class="alternatives">
                 ${question.alternatives.map(alt => `
-                    <div class="alternative alternative-${alt.letter.toLowerCase()}" data-letter="${alt.letter}" data-question-index="${index}">
+                    <div class="alternative alternative-${alt.letter.toLowerCase()}">
                         <div class="alternative-letter">${alt.letter}</div>
                         <div class="alternative-text">${alt.text}</div>
                     </div>
@@ -553,15 +555,6 @@ function renderQuestions() {
             </div>
         </div>
     `).join('');
-
-  // Add click event listeners to alternatives
-  document.querySelectorAll('.alternative').forEach(alternative => {
-    alternative.addEventListener('click', () => {
-      const questionIndex = parseInt(alternative.getAttribute('data-question-index'));
-      const letter = alternative.getAttribute('data-letter');
-      selectAlternative(questionIndex, letter);
-    });
-  });
 }
 
 function selectAlternative(questionIndex, letter) {
@@ -576,17 +569,17 @@ function selectAlternative(questionIndex, letter) {
   const selectedAlt = document.querySelector(`#question-${questionIndex} .alternative-${letter.toLowerCase()}`);
   if (selectedAlt) {
     selectedAlt.style.backgroundColor = 'rgba(139, 76, 187, 0.2)';
-    selectedAlt.style.border = '2px solid var(--border-primary)';
+    selectedAlt.style.border = '2px solid #8B4CBB';
   }
 
   questionState.selectedAnswer = letter;
 
-  const answerBox = document.getElementById(`answerBox-${index}`);
-  const answerText = document.getElementById(`answerText-${index}`);
+  const answerBox = document.getElementById(`answerBox-${questionIndex}`);
+  const answerText = document.getElementById(`answerText-${questionIndex}`);
 
   if (questionState.selectedAnswer) {
     answerText.textContent = `Alternativa selecionada: ${letter}`;
-    answerBox.style.borderColor = 'var(--border-primary)';
+    answerBox.style.borderColor = '#8B4CBB';
     answerBox.style.backgroundColor = 'rgba(139, 76, 187, 0.05)';
   }
 }
