@@ -1,17 +1,18 @@
 :root {
   /* Colors */
   --background-body: #f5f5dc;
-  --background-white: white;
+  --background-white-box: #f5f5dc;
+  --background-white: black;
   --text-primary: #333;
   --text-secondary: #666;
   --border-primary: black;
   /* Changed to black for black borders */
-  --border-light: #ddd;
-  --question-header-bg: #E8E8E8;
-  --badge-concurso: #D4A574;
-  --badge-area: #5CB85C;
-  --badge-cargo: #D63384;
-  --topic-tag-bg: #FFC107;
+  --border-light: #black;
+  --question-header-bg: #f5f5dc;
+  --badge-concurso: #FFEBA2;
+  --badge-area: #A6FFB1;
+  --badge-cargo: #FFA2B5;
+  --topic-tag-bg: #A4C9FF;
   /* Yellow for "Texto" badge as per image */
   --alternative-a: #F39C12;
   --alternative-b: #3498DB;
@@ -172,7 +173,7 @@ body {
 }
 
 .text-base {
-  background-color: var(--background-white);
+  background-color: var(--background-white-box);
   border: var(--border-width-base) solid var(--border-primary);
   /* Black border instead of light */
   border-radius: var(--border-radius-base);
@@ -259,7 +260,7 @@ body {
   height: 50px;
   border: var(--border-width-answer) solid var(--border-light);
   border-radius: var(--border-radius-circle);
-  background-color: var(--background-white);
+  background-color: var(--background-white-box);
   display: flex;
   align-items: center;
   padding: 0 var(--padding-base);

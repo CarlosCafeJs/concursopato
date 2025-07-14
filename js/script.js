@@ -509,7 +509,26 @@ const state = questions.map(() => ({
 
 function renderQuestions() {
   const container = document.getElementById('questionContainer');
-  container.innerHTML = questions.map((question, index) => `
+  if (!container) {
+    console.error("Elemento 'questionContainer' não encontrado no DOM.");
+    return;
+  }
+
+  if (!questions || !Array.isArray(questions) || questions.length === 0) {
+    console.error("Array de questões está vazio ou não definido.");
+    container.innerHTML = '<p style="color: red;">Erro: Nenhuma questão disponível para exibição.</p>';
+    return;
+  }
+
+  try {
+    container.innerHTML = questions.map((question, index) => {
+      // Validate question structure
+      if (!question.id || !question.text || !question.alternatives) {
+        console.warn(`Questão ${index} está incompleta ou mal formatada.`);
+        return '';
+      }
+
+      return `
         <div class="question-container" id="question-${index}">
             <div class="question-header">
                 <div class="question-number">${question.id}</div>
@@ -520,17 +539,17 @@ function renderQuestions() {
                 </div>
             </div>
             
-            <div class="topic-tag">${question.topic}</div>
+            <div class="topic-tag">${question.topic || 'Sem tópico'}</div>
             
             <div class="instruction">Leia o trecho a seguir:</div>
             
             <div class="text-base">${question.text}</div>
             
-            <div class="instruction">${question.instruction}</div>
+            <div class="instruction">${question.instruction || 'Assinale a alternativa correta:'}</div>
             
             <div class="alternatives">
                 ${question.alternatives.map(alt => `
-                    <div class="alternative alternative-${alt.letter.toLowerCase()}">
+                    <div class="alternative alternative-${alt.letter.toLowerCase()}" data-letter="${alt.letter}" data-question-index="${index}">
                         <div class="alternative-letter">${alt.letter}</div>
                         <div class="alternative-text">${alt.text}</div>
                     </div>
@@ -546,24 +565,42 @@ function renderQuestions() {
             </div>
             
             <div class="answer-result" id="answerResult-${index}">
-                <div class="answer-explanation" id="answerExplanation-${index}">${question.explanation.correct}</div>
+                <div class="answer-explanation" id="answerExplanation-${index}">${question.explanation?.correct || ''}</div>
             </div>
             
             <div class="comment-section" id="commentSection-${index}">
                 <div class="comment-title">Comentário do Professor</div>
-                <div class="comment-text">${question.comment}</div>
+                <div class="comment-text">${question.comment || 'Sem comentário disponível.'}</div>
             </div>
         </div>
-    `).join('');
+      `;
+    }).join('');
+
+    // Add event listeners to alternatives
+    document.querySelectorAll('.alternative').forEach(alternative => {
+      alternative.addEventListener('click', () => {
+        const questionIndex = alternative.getAttribute('data-question-index');
+        const letter = alternative.getAttribute('data-letter');
+        selectAlternative(questionIndex, letter);
+      });
+    });
+  } catch (error) {
+    console.error("Erro ao renderizar questões:", error);
+    container.innerHTML = '<p style="color: red;">Erro ao carregar questões. Verifique o console para detalhes.</p>';
+  }
 }
 
 function selectAlternative(questionIndex, letter) {
   const questionState = state[questionIndex];
-  const alternatives = document.querySelectorAll(`#question-${questionIndex} .alternative`);
+  if (!questionState) {
+    console.error(`Estado não encontrado para a questão ${questionIndex}`);
+    return;
+  }
 
+  const alternatives = document.querySelectorAll(`#question-${questionIndex} .alternative`);
   alternatives.forEach(alt => {
     alt.style.backgroundColor = '';
-    alt.style.border = '';
+    alt.style.border = 'var(--border-width-base) solid var(--border-primary)';
   });
 
   const selectedAlt = document.querySelector(`#question-${questionIndex} .alternative-${letter.toLowerCase()}`);
@@ -576,7 +613,6 @@ function selectAlternative(questionIndex, letter) {
 
   const answerBox = document.getElementById(`answerBox-${questionIndex}`);
   const answerText = document.getElementById(`answerText-${questionIndex}`);
-
   if (questionState.selectedAnswer) {
     answerText.textContent = `Alternativa selecionada: ${letter}`;
     answerBox.style.borderColor = '#8B4CBB';
@@ -590,14 +626,20 @@ function showAnswer(questionIndex) {
   const answerResult = document.getElementById(`answerResult-${questionIndex}`);
   const explanation = document.getElementById(`answerExplanation-${questionIndex}`);
 
+  if (!questionState || !question) {
+    console.error(`Questão ou estado não encontrado para o índice ${questionIndex}`);
+    alert('Erro: Questão não encontrada.');
+    return;
+  }
+
   if (questionState.selectedAnswer) {
     answerResult.style.display = 'block';
     if (questionState.selectedAnswer === question.correctAnswer) {
       answerResult.className = 'answer-result answer-correct';
-      explanation.innerHTML = question.explanation.correct;
+      explanation.innerHTML = question.explanation?.correct || 'Explicação não disponível.';
     } else {
       answerResult.className = 'answer-result answer-incorrect';
-      explanation.innerHTML = question.explanation.incorrect;
+      explanation.innerHTML = question.explanation?.incorrect || 'Explicação não disponível.';
     }
   } else {
     alert('Por favor, selecione uma alternativa antes de ver a resposta.');
@@ -608,9 +650,21 @@ function showAnswer(questionIndex) {
 
 function showComment(questionIndex) {
   const commentSection = document.getElementById(`commentSection-${questionIndex}`);
-  commentSection.style.display = commentSection.style.display === 'none' || commentSection.style.display === '' ? 'block' : 'none';
+  if (commentSection) {
+    commentSection.style.display = commentSection.style.display === 'none' || commentSection.style.display === '' ? 'block' : 'none';
+  } else {
+    console.error(`Seção de comentário não encontrada para a questão ${questionIndex}`);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderQuestions();
+  try {
+    renderQuestions();
+  } catch (error) {
+    console.error("Erro ao inicializar o carregamento das questões:", error);
+    const container = document.getElementById('questionContainer');
+    if (container) {
+      container.innerHTML = '<p style="color: red;">Erro ao carregar questões. Verifique o console para detalhes.</p>';
+    }
+  }
 });
