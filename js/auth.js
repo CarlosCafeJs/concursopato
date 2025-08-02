@@ -1,16 +1,17 @@
 // auth.js
 // Script para autenticação OAuth2 com a Hotmart
 
-const HOTMART_AUTH_URL = 'https://api.hotmart.com/security/oauth/authorize';
-const HOTMART_TOKEN_URL = 'https://api.hotmart.com/security/oauth/token';
+const HOTMART_AUTH_URL = 'https://api-sec-vlc.hotmart.com/security/oauth/authorize';
+const HOTMART_TOKEN_URL = 'https://api-sec-vlc.hotmart.com/security/oauth/token';
 
 // Substitua com os dados do seu app criado no Hotmart Developers
 const CLIENT_ID = '12c2c339-12d7-4436-beac-1041058e14e8';
 const CLIENT_SECRET = '1a0233c3-e228-4e99-be4e-65f7eae8b2be';
 const REDIRECT_URI = 'https://concursopato.vercel.app/';
+const SCOPE = 'all'; // Ajuste conforme necessário
 
 function iniciarAutenticacaoHotmart() {
-  const authUrl = `${HOTMART_AUTH_URL}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code`;
+  const authUrl = `${HOTMART_AUTH_URL}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&scope=${SCOPE}`;
   window.location.href = authUrl;
 }
 
@@ -38,6 +39,7 @@ async function obterTokenHotmart(code) {
     const tokenData = await response.json();
     console.log('Token de acesso Hotmart:', tokenData);
     localStorage.setItem('hotmart_access_token', tokenData.access_token);
+    // Armazene também o refresh_token se retornado: localStorage.setItem('hotmart_refresh_token', tokenData.refresh_token);
 
     // Aqui você pode redirecionar o usuário ou continuar o fluxo
     alert('Autenticado com sucesso via Hotmart!');
@@ -53,8 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (code) {
     obterTokenHotmart(code);
+    // Opcional: Limpe o code da URL para segurança: history.replaceState({}, '', window.location.pathname);
   }
 });
-
-// Exportar funções se for usar com módulos (opcional)
-// export { iniciarAutenticacaoHotmart, obterTokenHotmart };
