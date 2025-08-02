@@ -338,8 +338,40 @@ function showComment(questionIndex) {
   }
 }
 
+// Função para alternar modo noturno
+function toggleDarkMode() {
+  const body = document.body;
+  const darkModeBtn = document.getElementById('darkModeBtn');
+  const isDarkMode = body.classList.contains('dark-mode');
+
+  if (isDarkMode) {
+    body.classList.remove('dark-mode');
+    darkModeBtn.innerHTML = '🌙 Modo Noturno';
+    localStorage.setItem('darkMode', 'false');
+  } else {
+    body.classList.add('dark-mode');
+    darkModeBtn.innerHTML = '☀️ Modo Claro';
+    localStorage.setItem('darkMode', 'true');
+  }
+}
+
+// Carrega preferência do modo noturno
+function loadDarkModePreference() {
+  const darkModePreference = localStorage.getItem('darkMode');
+  const body = document.body;
+  const darkModeBtn = document.getElementById('darkModeBtn');
+
+  if (darkModePreference === 'true') {
+    body.classList.add('dark-mode');
+    if (darkModeBtn) {
+      darkModeBtn.innerHTML = '☀️ Modo Claro';
+    }
+  }
+}
+
 // Inicializa quando o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM carregado, aplicação pronta para uso.');
   updateCurrentSubjectDisplay();
+  loadDarkModePreference();
 });

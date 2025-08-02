@@ -1,19 +1,17 @@
 :root {
-  /* Colors */
+  /* Colors - Modo Claro */
   --background-body: #f5f5dc;
   --background-white-box: #f5f5dc;
   --background-white: black;
   --text-primary: #333;
   --text-secondary: #666;
   --border-primary: black;
-  /* Changed to black for black borders */
   --border-light: #black;
   --question-header-bg: #f5f5dc;
   --badge-concurso: #FFEBA2;
   --badge-area: #A6FFB1;
   --badge-cargo: #FFA2B5;
   --topic-tag-bg: #A4C9FF;
-  /* Yellow for "Texto" badge as per image */
   --alternative-a: #F39C12;
   --alternative-b: #3498DB;
   --alternative-c: #9B59B6;
@@ -27,6 +25,8 @@
   --btn-comment-hover: #C0392B;
   --btn-load: #007bff;
   --btn-load-hover: #0056b3;
+  --btn-dark-mode: #6c757d;
+  --btn-dark-mode-hover: #5a6268;
   --answer-correct-bg: #d4edda;
   --answer-correct-border: #c3e6cb;
   --answer-correct-text: #155724;
@@ -37,6 +37,7 @@
   --comment-section-border: #bbdefb;
   --comment-title: #1976d2;
   --alternative-hover: rgba(255, 255, 255, 0.5);
+  --box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 
   /* Sizes */
   --font-size-base: 14px;
@@ -57,11 +58,52 @@
   --margin-base: 20px;
   --margin-large: 30px;
   --border-width-base: 2px;
-  /* Increased for thicker black borders */
   --border-width-question: 3px;
   --border-width-answer: 2px;
   --line-height-base: 1.4;
   --line-height-text-base: 1.5;
+}
+
+/* Modo Noturno */
+body.dark-mode {
+  --background-body: #1a1a1a;
+  --background-white-box: #2d2d2d;
+  --background-white: white;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --border-primary: #444;
+  --border-light: #444;
+  --question-header-bg: #2d2d2d;
+  --badge-concurso: #cc8800;
+  --badge-area: #4d8c56;
+  --badge-cargo: #b85a70;
+  --topic-tag-bg: #5b7fa8;
+  --alternative-a: #cc7a00;
+  --alternative-b: #2980b9;
+  --alternative-c: #7d4f94;
+  --alternative-d: #c55a1b;
+  --alternative-e: #1e8e4e;
+  --btn-print: #6f4c93;
+  --btn-print-hover: #5a3d7a;
+  --btn-answer: #1e8e4e;
+  --btn-answer-hover: #196f3d;
+  --btn-comment: #c0392b;
+  --btn-comment-hover: #a93226;
+  --btn-load: #0066cc;
+  --btn-load-hover: #004d99;
+  --btn-dark-mode: #ffc107;
+  --btn-dark-mode-hover: #e0a800;
+  --answer-correct-bg: #1b4332;
+  --answer-correct-border: #2d5a3d;
+  --answer-correct-text: #a7c957;
+  --answer-incorrect-bg: #4d1f1f;
+  --answer-incorrect-border: #662626;
+  --answer-incorrect-text: #f8b4b4;
+  --comment-section-bg: #1f2937;
+  --comment-section-border: #374151;
+  --comment-title: #60a5fa;
+  --alternative-hover: rgba(255, 255, 255, 0.1);
+  --box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 body {
@@ -70,6 +112,7 @@ body {
   margin: 0;
   padding: var(--padding-base);
   line-height: var(--line-height-base);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .header {
@@ -101,10 +144,16 @@ body {
   border: var(--border-width-base) solid var(--border-primary);
   border-radius: var(--border-radius-large);
   padding: var(--padding-base);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--box-shadow);
 }
 
 .subject-selector {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.controls-right {
   display: flex;
   align-items: center;
   gap: 15px;
@@ -180,8 +229,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   page-break-inside: avoid;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  /* Added shadow for depth */
+  box-shadow: var(--box-shadow);
 }
 
 .question-header {
@@ -202,7 +250,6 @@ body {
   color: var(--text-primary);
   font-size: var(--font-size-question-number);
   border: var(--border-width-base) solid var(--border-primary);
-  /* Black border around question number */
   padding: 2px 8px;
   border-radius: var(--border-radius-base);
 }
@@ -216,13 +263,11 @@ body {
 .badge {
   padding: 4px 12px;
   border: var(--border-width-base) solid var(--border-primary);
-  /* Black border around badges */
   border-radius: var(--border-radius-large);
   font-size: var(--font-size-badge);
   font-weight: bold;
   color: var(--background-white);
   text-transform: uppercase;
-  /* Match the image's uppercase text */
 }
 
 .badge-concurso {
@@ -242,14 +287,12 @@ body {
   color: var(--background-white);
   padding: 6px 15px;
   border: var(--border-width-base) solid var(--border-primary);
-  /* Black border around topic tag */
   border-radius: var(--border-radius-large);
   font-size: var(--font-size-badge);
   font-weight: bold;
   display: inline-block;
   margin-bottom: var(--margin-base);
   text-transform: uppercase;
-  /* Match the image's uppercase text */
 }
 
 .instruction {
@@ -258,13 +301,11 @@ body {
   margin-bottom: 15px;
   font-size: var(--font-size-base);
   border-bottom: var(--border-width-base) dashed var(--border-primary);
-  /* Dashed line as in image */
 }
 
 .text-base {
   background-color: var(--background-white-box);
   border: var(--border-width-base) solid var(--border-primary);
-  /* Black border instead of light */
   border-radius: var(--border-radius-base);
   padding: 15px;
   margin: 15px 0;
@@ -283,10 +324,9 @@ body {
   margin: 10px 0;
   padding: var(--padding-alternative);
   border: var(--border-width-base) solid var(--border-primary);
-  /* Black border around alternatives */
   border-radius: var(--border-radius-base);
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, border-color 0.3s;
   gap: 12px;
 }
 
@@ -298,7 +338,6 @@ body {
   width: 22px;
   height: 22px;
   border: var(--border-width-base) solid var(--border-primary);
-  /* Black border around letter circles */
   border-radius: 50%;
   color: var(--background-white);
   font-weight: bold;
@@ -360,7 +399,6 @@ body {
 .btn {
   padding: var(--padding-btn);
   border: var(--border-width-base) solid var(--border-primary);
-  /* Black border around buttons */
   border-radius: var(--border-radius-circle);
   font-weight: bold;
   cursor: pointer;
@@ -368,7 +406,6 @@ body {
   transition: all 0.3s;
   min-width: 100px;
   background-color: var(--background-white);
-  /* Match image button style */
   color: var(--text-primary);
 }
 
@@ -393,6 +430,15 @@ body {
 
 .btn-load:hover:not(:disabled) {
   background-color: var(--btn-load-hover);
+}
+
+.btn-dark-mode {
+  background-color: var(--btn-dark-mode);
+  color: var(--background-body);
+}
+
+.btn-dark-mode:hover {
+  background-color: var(--btn-dark-mode-hover);
 }
 
 .btn-answer {
@@ -506,6 +552,12 @@ body {
     width: 100%;
   }
 
+  .controls-right {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+
   .subject-dropdown {
     min-width: auto;
     width: 100%;
@@ -552,7 +604,8 @@ body {
   .answer-section,
   .answer-box,
   .btn-answer,
-  .btn-comment {
+  .btn-comment,
+  .btn-dark-mode {
     display: none;
   }
 
