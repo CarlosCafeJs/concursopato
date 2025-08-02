@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   /* Colors */
   --background-body: #f5f5dc;
@@ -79,6 +81,11 @@ body {
   color: var(--text-primary);
   margin: 0;
   font-size: var(--font-size-header);
+}
+
+.alternative.selected {
+  background-color: rgba(139, 76, 187, 0.2);
+  border: 2px solid #8B4CBB;
 }
 
 .question-container {
