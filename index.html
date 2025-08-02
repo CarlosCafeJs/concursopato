@@ -3,20 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado Banco do Brasil - Conhecimentos Bancários</title>
+    <title>Simulado Banco do Brasil</title>
     <link rel="stylesheet" href="style/styles.css">
 </head>
 <body>
     <div class="header">
-        <h1>CONHECIMENTOS BANCÁRIOS</h1>
+        <h1>Simulado Banco do Brasil</h1>
+        <div class="current-subject" id="currentSubject">Selecione uma matéria</div>
     </div>
     
-    <div class="print-button">
+    <div class="controls">
+        <div class="subject-selector">
+            <label for="subjectSelect">Matéria:</label>
+            <select id="subjectSelect" class="subject-dropdown">
+                <option value="">-- Selecione uma matéria --</option>
+                <option value="conhecimentosbancarios">Conhecimentos Bancários</option>
+                <option value="portugues">Português</option>
+                <option value="matematica">Matemática</option>
+                <option value="probabilidadeEestatistica">Probabilidade e Estatística</option>
+                <option value="legislacao">Legislação</option>
+                <option value="ingles">Inglês</option>
+                <option value="vendasEnegociacao">Vendas e Negociação</option>
+                <option value="tecnologia">Tecnologia</option>
+                <option value="atualidadesMercadoFinanceiro">Atualidades do Mercado Financeiro</option>
+            </select>
+            <button class="btn btn-load" id="loadQuestionsBtn" onclick="loadSelectedSubject()">
+                Carregar Questões
+            </button>
+        </div>
+        
         <button class="btn btn-print" onclick="window.print()">Imprimir Simulado</button>
     </div>
     
     <div id="questionContainer">
-        <p id="loadingMessage">Carregando questões, por favor aguarde...</p>
+        <div class="loading-message" id="loadingMessage" style="display: none;">
+            Carregando questões, por favor aguarde...
+        </div>
+        <div class="welcome-message">
+            <h3>Bem-vindo ao Simulado do Banco do Brasil!</h3>
+            <p>Selecione uma matéria acima e clique em "Carregar Questões" para começar.</p>
+        </div>
     </div>
 
     <script src="js/script.js"></script>

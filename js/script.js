@@ -1,21 +1,72 @@
 let questions = [];
 const state = [];
+let currentSubject = '';
 
-async function fetchQuestions() {
+// Mapeamento dos nomes das matérias para exibição
+const subjectNames = {
+  'conhecimentosbancarios': 'Conhecimentos Bancários',
+  'portugues': 'Português',
+  'matematica': 'Matemática',
+  'probabilidadeEestatistica': 'Probabilidade e Estatística',
+  'legislacao': 'Legislação',
+  'ingles': 'Inglês',
+  'vendasEnegociacao': 'Vendas e Negociação',
+  'tecnologia': 'Tecnologia',
+  'atualidadesMercadoFinanceiro': 'Atualidades do Mercado Financeiro'
+};
+
+function loadSelectedSubject() {
+  const select = document.getElementById('subjectSelect');
+  const selectedSubject = select.value;
+
+  if (!selectedSubject) {
+    alert('Por favor, selecione uma matéria.');
+    return;
+  }
+
+  currentSubject = selectedSubject;
+  updateCurrentSubjectDisplay();
+  fetchQuestions(selectedSubject);
+}
+
+function updateCurrentSubjectDisplay() {
+  const currentSubjectEl = document.getElementById('currentSubject');
+  if (currentSubject && subjectNames[currentSubject]) {
+    currentSubjectEl.textContent = subjectNames[currentSubject];
+  } else {
+    currentSubjectEl.textContent = 'Selecione uma matéria';
+  }
+}
+
+async function fetchQuestions(subject) {
   const container = document.getElementById('questionContainer');
   const loadingMessage = document.getElementById('loadingMessage');
+  const loadBtn = document.getElementById('loadQuestionsBtn');
 
   try {
-    console.log('Iniciando requisição à API...');
+    // Mostra loading e desabilita botão
+    if (loadingMessage) {
+      loadingMessage.style.display = 'block';
+    }
 
-    // URL do seu Apps Script
-    const apiUrl = 'https://script.google.com/macros/s/AKfycbyAnclN4GUg0CN5Lyr85HlPE25cb_BMyKUIQMW-D01md8OJlFFh3momvT47g9YdusNyCA/exec?sheet=portugues';
+    // Limpa container e adiciona loading
+    container.innerHTML = '<div class="loading-message">Carregando questões, por favor aguarde...</div>';
+
+    if (loadBtn) {
+      loadBtn.disabled = true;
+      loadBtn.textContent = 'Carregando...';
+    }
+
+    console.log('Iniciando requisição à API para:', subject);
+
+    // URL do Apps Script com a matéria selecionada
+    const apiUrl = `https://script.google.com/macros/s/AKfycbyAnclN4GUg0CN5Lyr85HlPE25cb_BMyKUIQMW-D01md8OJlFFh3momvT47g9YdusNyCA/exec?sheet=${subject}`;
 
     console.log('URL da API:', apiUrl);
 
     const response = await fetch(apiUrl, {
       method: 'GET',
-      mode: 'cors', // Importante para CORS
+      mode: 'cors',
       cache: 'no-cache',
       headers: {
         'Accept': 'application/json',
@@ -23,7 +74,6 @@ async function fetchQuestions() {
     });
 
     console.log('Status da resposta:', response.status);
-    console.log('Headers da resposta:', [...response.headers.entries()]);
 
     if (!response.ok) {
       throw new Error(`Erro HTTP: ${response.status} - ${response.statusText}`);
@@ -61,15 +111,14 @@ async function fetchQuestions() {
     questions = questionsArray.slice(0, 25);
 
     if (!Array.isArray(questions) || questions.length === 0) {
-      throw new Error('Nenhuma questão foi retornada pela API.');
+      throw new Error(`Nenhuma questão foi encontrada para a matéria "${subjectNames[subject] || subject}".`);
     }
 
-    console.log(`${questions.length} questões carregadas com sucesso`);
+    console.log(`${questions.length} questões carregadas com sucesso para ${subjectNames[subject]}`);
 
     // Inicializa o estado para cada questão
-    state.length = 0; // Limpa o array
+    state.length = 0;
     questions.forEach((question, index) => {
-      // Verifica se a questão tem os campos mínimos necessários
       if (!question.id || !question.text) {
         console.warn(`Questão ${index + 1} está incompleta:`, question);
       }
@@ -80,39 +129,34 @@ async function fetchQuestions() {
       });
     });
 
-    // Remove a mensagem de carregamento
-    if (loadingMessage) {
-      loadingMessage.style.display = 'none';
-    }
-
     // Renderiza as questões
     renderQuestions();
 
   } catch (error) {
     console.error('Erro detalhado ao buscar questões:', error);
 
-    if (loadingMessage) {
-      loadingMessage.style.display = 'none';
-    }
-
-    if (container) {
-      container.innerHTML = `
-        <div style="color: red; padding: 20px; border: 1px solid red; border-radius: 5px; margin: 10px;">
-          <h3>Erro ao carregar questões</h3>
-          <p><strong>Mensagem:</strong> ${error.message}</p>
-          <p><strong>Possíveis soluções:</strong></p>
-          <ul>
-            <li>Verifique se o Apps Script está publicado como "Web app"</li>
-            <li>Confirme que as permissões estão definidas como "Anyone" ou "Anyone with link"</li>
-            <li>Verifique se o ID da planilha está correto</li>
-            <li>Confirme que a aba "conhecimentosbancarios" existe na planilha</li>
-            <li>Teste o link do Apps Script diretamente no navegador</li>
-          </ul>
-          <button onclick="fetchQuestions()" style="margin-top: 10px; padding: 5px 10px;">
-            Tentar Novamente
-          </button>
-        </div>
-      `;
+    container.innerHTML = `
+            <div class="error-message">
+                <h3>Erro ao carregar questões</h3>
+                <p><strong>Matéria:</strong> ${subjectNames[subject] || subject}</p>
+                <p><strong>Mensagem:</strong> ${error.message}</p>
+                <p><strong>Possíveis soluções:</strong></p>
+                <ul>
+                    <li>Verifique se o Apps Script está publicado como "Web app"</li>
+                    <li>Confirme que as permissões estão definidas como "Anyone" ou "Anyone with link"</li>
+                    <li>Verifique se a aba "${subject}" existe na planilha</li>
+                    <li>Teste o link do Apps Script diretamente no navegador</li>
+                </ul>
+                <button onclick="fetchQuestions('${subject}')">
+                    Tentar Novamente
+                </button>
+            </div>
+        `;
+  } finally {
+    // Reabilita o botão
+    if (loadBtn) {
+      loadBtn.disabled = false;
+      loadBtn.textContent = 'Carregar Questões';
     }
   }
 }
@@ -126,12 +170,11 @@ function renderQuestions() {
 
   if (!questions || !Array.isArray(questions) || questions.length === 0) {
     console.error('Array de questões está vazio ou não definido.');
-    container.innerHTML = '<p style="color: red;">Erro: Nenhuma questão disponível para exibição.</p>';
+    container.innerHTML = '<div class="error-message"><p>Erro: Nenhuma questão disponível para exibição.</p></div>';
     return;
   }
 
   try {
-    console.log('Renderizando questões...');
     container.innerHTML = questions.map((question, index) => {
       // Verifica campos obrigatórios
       if (!question.id || !question.text) {
@@ -149,51 +192,51 @@ function renderQuestions() {
       ].filter(alt => alt.text && String(alt.text).trim() !== '');
 
       return `
-        <div class="question-container" id="question-${index}">
-            <div class="question-header">
-                <div class="question-number">${question.id}</div>
-                <div class="badges">
-                    <span class="badge badge-concurso">Concurso: Banco do Brasil</span>
-                    <span class="badge badge-area">Área: Conhecimentos Bancários</span>
-                    <span class="badge badge-cargo">Cargo: Escriturário</span>
-                </div>
-            </div>
-            
-            <div class="topic-tag">${question.topic || question.topico || 'Sem tópico'}</div>
-            
-            <div class="instruction">Leia o trecho a seguir:</div>
-            
-            <div class="text-base">${question.text || question.texto}</div>
-            
-            <div class="instruction">${question.instruction || question.instrucao || 'Assinale a alternativa correta:'}</div>
-            
-            <div class="alternatives">
-                ${alternatives.map(alt => `
-                    <div class="alternative alternative-${alt.letter.toLowerCase()}" data-letter="${alt.letter}" data-question-index="${index}">
-                        <div class="alternative-letter">${alt.letter}</div>
-                        <div class="alternative-text">${alt.text}</div>
+                <div class="question-container" id="question-${index}">
+                    <div class="question-header">
+                        <div class="question-number">${question.id}</div>
+                        <div class="badges">
+                            <span class="badge badge-concurso">Concurso: Banco do Brasil</span>
+                            <span class="badge badge-area">Área: ${subjectNames[currentSubject] || 'Geral'}</span>
+                            <span class="badge badge-cargo">Cargo: Escriturário</span>
+                        </div>
                     </div>
-                `).join('')}
-            </div>
-            
-            <div class="answer-section">
-                <div class="answer-box" id="answerBox-${index}">
-                    <span id="answerText-${index}">Selecione uma alternativa</span>
+                    
+                    <div class="topic-tag">${question.topic || question.topico || 'Sem tópico'}</div>
+                    
+                    <div class="instruction">Leia o trecho a seguir:</div>
+                    
+                    <div class="text-base">${question.text || question.texto}</div>
+                    
+                    <div class="instruction">${question.instruction || question.instrucao || 'Assinale a alternativa correta:'}</div>
+                    
+                    <div class="alternatives">
+                        ${alternatives.map(alt => `
+                            <div class="alternative alternative-${alt.letter.toLowerCase()}" data-letter="${alt.letter}" data-question-index="${index}">
+                                <div class="alternative-letter">${alt.letter}</div>
+                                <div class="alternative-text">${alt.text}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="answer-section">
+                        <div class="answer-box" id="answerBox-${index}">
+                            <span id="answerText-${index}">Selecione uma alternativa</span>
+                        </div>
+                        <button class="btn btn-answer" onclick="showAnswer(${index})">✓ Resposta</button>
+                        <button class="btn btn-comment" onclick="showComment(${index})">💬 Comentário</button>
+                    </div>
+                    
+                    <div class="answer-result" id="answerResult-${index}" style="display: none;">
+                        <div class="answer-explanation" id="answerExplanation-${index}"></div>
+                    </div>
+                    
+                    <div class="comment-section" id="commentSection-${index}" style="display: none;">
+                        <div class="comment-title">Comentário do Professor</div>
+                        <div class="comment-text">${question.comment || question.comentario || 'Sem comentário disponível.'}</div>
+                    </div>
                 </div>
-                <button class="btn btn-answer" onclick="showAnswer(${index})">✓ Resposta</button>
-                <button class="btn btn-comment" onclick="showComment(${index})">💬 Comentário</button>
-            </div>
-            
-            <div class="answer-result" id="answerResult-${index}" style="display: none;">
-                <div class="answer-explanation" id="answerExplanation-${index}"></div>
-            </div>
-            
-            <div class="comment-section" id="commentSection-${index}" style="display: none;">
-                <div class="comment-title">Comentário do Professor</div>
-                <div class="comment-text">${question.comment || question.comentario || 'Sem comentário disponível.'}</div>
-            </div>
-        </div>
-      `;
+            `;
     }).join('');
 
     // Adiciona event listeners para as alternativas
@@ -273,13 +316,12 @@ function showAnswer(questionIndex) {
     if (isCorrect) {
       answerResult.className = 'answer-result answer-correct';
       if (explanation) {
-        explanation.innerHTML = question.explanation_correct || question.explicacao_correta || 'Resposta correta!';
+        explanation.innerHTML = `<strong>✓ Correto!</strong><br>${question.explanation_correct || question.explicacao_correta || 'Parabéns! Você acertou a questão.'}`;
       }
     } else {
       answerResult.className = 'answer-result answer-incorrect';
       if (explanation) {
-        explanation.innerHTML = question.explanation_incorrect || question.explicacao_incorreta ||
-          `Resposta incorreta. A resposta correta é: ${correctAnswer}`;
+        explanation.innerHTML = `<strong>✗ Incorreto!</strong><br>A resposta correta é: <strong>${correctAnswer}</strong><br>${question.explanation_incorrect || question.explicacao_incorreta || 'Estude mais este tópico para melhorar seu desempenho.'}`;
       }
     }
   }
@@ -298,6 +340,6 @@ function showComment(questionIndex) {
 
 // Inicializa quando o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM carregado, iniciando fetchQuestions...');
-  fetchQuestions();
+  console.log('DOM carregado, aplicação pronta para uso.');
+  updateCurrentSubjectDisplay();
 });
